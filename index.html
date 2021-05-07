@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo OOP</title>
+</head>
+<body>
+<script>
+    let numbers = [1, 2, 3, 4, 5, 6];
+    let products = [
+        [1, 'Tra Sua', 10000],
+        [2, 'Tra Chanh', 15000],
+        [3, 'Dau xanh', 20000]
+    ];
+
+    class Drink { //Pascal - camel Hoa
+        constructor(_id,_name,_price) { // Ham khoi tao - goi khi khoi tao ra doi tuong
+            this.id = _id;
+            this.name = _name;
+            this.price = _price;
+            this.image = 'abc';
+        }
+
+        display(){
+            document.write(this.id +','+this.name+','+this.price+"<br>");
+        }
+    }
+    let drinks = [];
+
+    for (let i = 0; i < 100; i++) {
+        let drink = new Drink(i, 'Tra Sua '+i, Math.ceil(Math.random()*30)*1000);
+        drink.display();
+        drinks.push(drink);
+    }
+
+    let drink4 = new Drink(1,'Tra sua 4',3000);
+    let drink5 = new Drink(10,'Tra sua 5',9000);
+    let drink6 = new Drink(10,'Tra sua 6',17000);
+    let dayOfBirth // camel thuong
+    let drink1 = {
+        id:1,
+        name:'Tra Sua',
+        price:10000,
+        image:''
+    };
+
+    let drink2= {
+        id:1,
+        name:'Tra Chanh',
+        price:15000,
+        image: ''
+    };
+
+    let drink3= {
+        id:1,
+        name:'Dau Xanh',
+        price:20000
+    };
+    drink4.display();
+    drink5.display();
+    drink6.display()
+
+</script>
+</body>
+</html>

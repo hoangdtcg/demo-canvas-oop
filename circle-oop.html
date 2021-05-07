@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas" onclick="chooseCanvas(canvas1)" style="border: 1px solid black;background-color: rgba(248,246,246,0.99)" width="400"
+        height="300"></canvas>
+<canvas id="myCanvas2" onclick="chooseCanvas(canvas2)" style="border: 1px solid black;background-color: rgba(219,169,119,0.99)" width="400"
+        height="300"></canvas>
+<script>
+    class Circle {
+        constructor(_x, _y, _radius, _color) {
+            this.x = _x;
+            this.y = _y;
+            this.radius = _radius;
+            this.color = _color;
+            this.speed = 5;
+            this.speedX = 5;
+            this.speedY = 5;
+            this.dir = 'right';
+        }
+
+        draw(pen) {
+            pen.beginPath();
+            pen.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            pen.fillStyle = this.color;
+            pen.fill();
+            pen.closePath();
+        }
+
+        move(){
+            // switch (this.dir) {
+            //     case "right":
+            //         this.moveRight();
+            //         break;
+            //     case 'left':
+            //         this.moveLeft();
+            //         break;
+            // }
+            this.x += this.speedX;
+            this.y += this.speedY;
+        }
+
+        moveRight() {
+            this.x += this.speed;
+        }
+
+        moveLeft() {
+            this.x -= this.speed;
+        }
+
+        moveUp(){
+            this.y -= this.speed;
+        }
+
+        moveDown(){
+            this.y += this.speed;
+        }
+    }
+
+    let circle1 = new Circle(100, 150, 30, 'black');
+    let circle2 = new Circle(200, 250, 30, 'red');
+    let circle3 = new Circle(250, 100, 40, 'green');
+    // let circle1 = {
+    //   x: 100,
+    //   y: 150,
+    //   radius: 30,
+    //   color: 'black'
+    // }
+    //
+    // let circle2 = {
+    //   x: 200,
+    //   y: 250,
+    //   radius: 30,
+    //   color: 'red'
+    // }
+
+
+    let canvas1 = document.getElementById('myCanvas');
+    let canvas2 = document.getElementById('myCanvas2');
+    let mainCanvas = canvas1;
+    let pen = mainCanvas.getContext('2d');
+    // function draw(circle) {
+    //   pen.beginPath();
+    //   pen.arc(circle.x,circle.y,circle.radius,0,2*Math.PI);
+    //   pen.fillStyle = circle.color;
+    //   pen.fill();
+    //   pen.closePath();
+    // }
+    //
+    // draw(circle1);
+    // draw(circle2);
+    //
+    // circle1.draw(pen);
+    // circle2.draw(pen);
+    // circle3.draw(pen);
+    let player = new Circle(200,150,30,'black');
+    let circles = [];
+    for (let i = 0; i < 30; i++) {
+        let x = randomNumber(0, mainCanvas.width);
+        let y = randomNumber(0, mainCanvas.height);
+        let radius = randomNumber(10, 30);
+        let color = randomColor();
+        let circle = new Circle(x, y, radius, color);
+        circle.speedX = randomNumber(5,20);
+        circle.speedY = randomNumber(5,20);
+        circle.draw(pen);
+        circles.push(circle);
+    }
+
+    //red - green - blue(0,255)
+
+    function randomColor() {
+        let r = randomNumber(0, 255);
+        let g = randomNumber(0, 255);
+        let b = randomNumber(0, 255);
+        return 'rgb(' + r + ',' + g + ',' + b + ')'; //red
+    }
+
+    function randomNumber(min, max) {
+        let random = Math.floor(Math.random() * (max - min)) + min;
+        return random;
+    }
+
+    // pen.beginPath();
+    // pen.arc(circle2.x,circle2.y,circle2.radius,0,2*Math.PI);
+    // pen.fillStyle = circle2.color;
+    // pen.fill();
+    // pen.closePath();
+    function main() {
+        pen.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+        // for (let i = 0; i < circles.length; i++) {
+        //     circles[i].move();
+        //     // if(circles[i].x > canvas.width){
+        //     //     circles[i].dir = 'left';
+        //     // }
+        //     // if(circles[i].x < 0){
+        //     //     circles[i].dir = 'right';
+        //     // }
+        //     // if(circles[i].y > canvas.height){
+        //     //     circles[i].dir = 'top';
+        //     // }
+        //     // if(circles[i].y < 0){
+        //     //     circles[i].dir = 'down';
+        //     // }
+        //     if(circles[i].x > canvas.width || circles[i].x < 0){
+        //         circles[i].speedX = -circles[i].speedX;
+        //     }
+        //     if(circles[i].y > canvas.width || circles[i].y < 0){
+        //         circles[i].speedY = -circles[i].speedY;
+        //     }
+        //
+        //     circles[i].draw(pen);
+        // }
+        player.draw(pen)
+    }
+
+    function control(evt) {
+        switch (evt.key){
+            case 'a':
+                player.moveLeft();
+                break;
+            case 'd':
+                player.moveRight();
+                break;
+            case 's':
+                player.moveDown();
+                break;
+            case 'w':
+                player.moveUp();
+                break;
+        }
+    }
+
+    function chooseCanvas(canvas) {
+        mainCanvas = canvas;
+        pen = mainCanvas.getContext('2d');
+    }
+
+    window.addEventListener('keydown',control);
+
+    setInterval(main, 50);
+
+</script>
+</body>
+</html>
